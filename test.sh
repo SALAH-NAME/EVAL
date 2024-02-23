@@ -13,10 +13,13 @@ end=$1
 quote="\""
 max_op=$3
 
+pct=0
 mid=0
 ind=0
 max=-1
 min=-1
+max_set=""
+min_set=""
 ind=0
 ok="OK"
 
@@ -30,19 +33,22 @@ do
 	then
 		echo -e "\e[34m$num\e[0m"
 	else
+		pct=$(($pct + 1))
 		echo -e "\e[31m$num\e[0m"
 	fi
 
 	if [ $num -gt $max ]
 	then
 		max=$num
+		max_set=$num
 	fi
 	if [ $min -eq -1 ] || [ $num -lt $min ]
 	then
 		min=$num
+		min_set=$num
 	fi
 
-	res=$(../push_swap $combination | ./checker_linux $combination)
+	res=$(../push_swap $combination | ../checker_linux $combination)
 	if [ "$res" == "OK" ]
 	then
 		echo -e "\e[32m$res\e[0m"  # prints in green
@@ -72,4 +78,8 @@ then
 else
 	echo -e "\e[31m$ok\e[0m"  # prints in red
 fi
+echo -e "FAILS PCT => \e[31m$(($pct * 100 / $2))%\e[0m"
+echo -e "MAX_SET => \n $max_set"
+echo -e "MIN_SET => \n $min_set"
 echo "" 
+
