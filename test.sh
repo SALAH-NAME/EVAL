@@ -40,12 +40,12 @@ do
 	if [ $num -gt $max ]
 	then
 		max=$num
-		max_set=$num
+		max_set=$combination
 	fi
 	if [ $min -eq -1 ] || [ $num -lt $min ]
 	then
 		min=$num
-		min_set=$num
+		min_set=$combination
 	fi
 
 	res=$(../push_swap $combination | ../checker_linux $combination)
